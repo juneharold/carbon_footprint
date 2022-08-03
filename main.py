@@ -1,46 +1,42 @@
-import kivy
-kivy.require('2.1.0')
+def calculate_emissions():
+    emissions = 0
 
-from kivy.app import App
-from kivy.uix.label import Label
+    # transportation
+    type_of_vehicle = int(input("What type of vehicle do you use? enter 1 for car: "))
+    fuel_economy = 10.6286  # km/liter
+    distance = int(input("How long do you drive in km?: "))
+    gas_per_fuel = 2.3
+    emissions += fuel_economy * distance * gas_per_fuel
 
+    # Home Energy
+    natural_gas = int(input("How much gas does your home use? (kg): ")) * 1.9
+    electricity = int(input("How much electricity does your home use? (kWh): ")) * 0.709
+    emissions += natural_gas + electricity
 
-class MyApp(App):
-    def build(self):
-        return Label(text="Hello world!")
+    # Waste
+    cans = int(input("Roughly how many aluminum cans do you throw away?: ")) * 0.155
+    plastic = int(input("Roughly how much plastic do you throw away? (in kg): ")) * 6.02
+    glass = int(input("Roughly how much glass do you throw away (in kg): ")) * 8.4
+    paper = int(input("Roughly how much paper do you throw away? (in kg): ")) * 0.028
+    emissions += cans + plastic + glass + paper
 
-
-if __name__ == "__main__":
-    MyApp().run()
-
-
-
-"""
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-
-
-class LoginScreen(GridLayout):
-
-    def __init__(self, **kwargs):
-        super(LoginScreen, self).__init__(**kwargs)
-        self.cols = 2
-        self.add_widget(Label(text='User Name'))
-        self.username = TextInput(multiline=False)
-        self.add_widget(self.username)
-        self.add_widget(Label(text='password'))
-        self.password = TextInput(password=True, multiline=False)
-        self.add_widget(self.password)
+    print("Your total greenhouse gas emissions:", emissions, "kg")
+    return emissions
 
 
-class MyApp(App):
+"""record = []
 
-    def build(self):
-        return LoginScreen()
+for i in range(3):
+    result = calculate_emissions()
+    record.append(result)"""
 
 
-if __name__ == '__main__':
-    MyApp().run()
-"""
+import matplotlib.pyplot as plt
+x = [1, 2, 3]
+y = [2, 4, 1]
+
+plt.plot(x, y)
+plt.xlabel('x - axis')
+plt.ylabel('y - axis')
+plt.title('My first graph!')
+plt.show()
