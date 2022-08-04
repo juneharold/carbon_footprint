@@ -1,42 +1,54 @@
-def calculate_emissions():
-    emissions = 0
+import kivy
+kivy.require('2.1.0') # replace with your current kivy version !
 
-    # transportation
-    type_of_vehicle = int(input("What type of vehicle do you use? enter 1 for car: "))
-    fuel_economy = 10.6286  # km/liter
-    distance = int(input("How long do you drive in km?: "))
-    gas_per_fuel = 2.3
-    emissions += fuel_economy * distance * gas_per_fuel
-
-    # Home Energy
-    natural_gas = int(input("How much gas does your home use? (kg): ")) * 1.9
-    electricity = int(input("How much electricity does your home use? (kWh): ")) * 0.709
-    emissions += natural_gas + electricity
-
-    # Waste
-    cans = int(input("Roughly how many aluminum cans do you throw away?: ")) * 0.155
-    plastic = int(input("Roughly how much plastic do you throw away? (in kg): ")) * 6.02
-    glass = int(input("Roughly how much glass do you throw away (in kg): ")) * 8.4
-    paper = int(input("Roughly how much paper do you throw away? (in kg): ")) * 0.028
-    emissions += cans + plastic + glass + paper
-
-    print("Your total greenhouse gas emissions:", emissions, "kg")
-    return emissions
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
 
 
-"""record = []
+class MyGrid(GridLayout):
+    def __init__(self, **kwargs):
+        super(MyGrid, self).__init__(**kwargs)
+        self.cols = 1
 
-for i in range(3):
-    result = calculate_emissions()
-    record.append(result)"""
+        self.inside = GridLayout()
+        self.inside.cols = 2
+        self.inside.add_widget(Label(text="First name: "))
+        self.first_name = TextInput(multiline=False)
+        self.inside.add_widget(self.first_name)
+
+        self.inside.add_widget(Label(text="Last name: "))
+        self.last_name = TextInput(multiline=False)
+        self.inside.add_widget(self.last_name)
+
+        self.inside.add_widget(Label(text="Email: "))
+        self.email = TextInput(multiline=False)
+        self.inside.add_widget(self.email)
+
+        self.add_widget(self.inside)
+
+        self.submit = Button(text="Submit", font_size=40)
+        self.submit.bind(on_press=self.pressed)
+        self.add_widget(self.submit)
+
+    def pressed(self, instance):
+        first = self.first_name.text
+        last = self.last_name.text
+        email = self.email.text
+
+        print(first, last, email)
+        self.first_name.text = ""
+        self.last_name.text = ""
+        self.email.text = ""
 
 
-import matplotlib.pyplot as plt
-x = [1, 2, 3]
-y = [2, 4, 1]
+class MyApp(App):
 
-plt.plot(x, y)
-plt.xlabel('x - axis')
-plt.ylabel('y - axis')
-plt.title('My first graph!')
-plt.show()
+    def build(self):
+        return MyGrid()
+
+
+if __name__ == '__main__':
+    MyApp().run()
